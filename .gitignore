@@ -1,0 +1,6 @@
+# Binários gerados pela compilação
+*.exe
+*.o
+
+# Node
+node_modules/
