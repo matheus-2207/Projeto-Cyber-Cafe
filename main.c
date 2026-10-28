@@ -35,6 +35,21 @@ struct Produto {
 struct Produto listaProdutos[50];   // vetor com ate 50 produtos
 int totalProdutos = 0;              // quantos produtos ja foram cadastrados
 
+// Struct do atendimento
+// Cada atendimento liga um cliente, uma baia e um produto consumido
+struct Atendimento {
+    int idAtendimento;
+    int idCliente;     // quem usou (id da struct Cliente)
+    int idBaia;        // qual PC usou (id da struct Baia)
+    int minutosUso;    // tempo de uso da baia
+    int idProduto;     // produto consumido (0 = nenhum)
+    int qtdProduto;    // quantidade do produto
+    float valorTotal;  // valor da baia + valor do consumo
+    int ativo;         // 1 = valido, 0 = estornado
+};
+struct Atendimento listaAtendimentos[50];   // vetor com ate 50 atendimentos
+int totalAtendimentos = 0;                  // quantos atendimentos ja foram registrados
+
 
 // ----------------------------------------------------------------------------
 // MODULO 1: PERSPECTIVA DE CLIENTES
@@ -153,6 +168,58 @@ void moduloProdutos() {
     } while (opcao != 0);   // repete ate o usuario escolher 0
 }
 
+void moduloAtendimentosRelatorios() {
+    int opcao;   // guarda a opcao escolhida no submenu
+
+    do {
+        printf("\n===== MODULO DE ATENDIMENTOS E RELATORIOS =====\n");
+        printf("1. Registrar Atendimento (Cliente + Baia + Consumo)\n");
+        printf("2. Listar Atendimentos\n");
+        printf("3. Editar Atendimento\n");
+        printf("4. Estornar Atendimento\n");
+        printf("5. [RELATORIO] Baia mais usada (mais minutos)\n");
+        printf("6. [RELATORIO] Produto mais vendido\n");
+        printf("7. [RELATORIO] Cliente VIP (maior gasto)\n");
+        printf("8. [RELATORIO] Faturamento do dia\n");
+        printf("0. Voltar ao Menu Principal\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                printf("[Em construcao] Registrar: id do cliente, id da baia, minutos e produto consumido.\n");
+                break;
+            case 2:
+                printf("[Em construcao] Listar: mostra todos os atendimentos validos.\n");
+                break;
+            case 3:
+                printf("[Em construcao] Editar: altera minutos ou consumo pelo id.\n");
+                break;
+            case 4:
+                printf("[Em construcao] Estornar: muda o campo ativo para 0 pelo id.\n");
+                break;
+            case 5:
+                printf("[Em construcao] Relatorio: baia com mais minutos de uso.\n");
+                break;
+            case 6:
+                printf("[Em construcao] Relatorio: produto com maior quantidade vendida.\n");
+                break;
+            case 7:
+                printf("[Em construcao] Relatorio: cliente que mais gastou.\n");
+                break;
+            case 8:
+                printf("[Em construcao] Relatorio: soma do valor de todos os atendimentos.\n");
+                break;
+            case 0:
+                printf("Voltando ao Menu Principal...\n");
+                break;
+            default:
+                printf("Opcao invalida! Tente novamente.\n");
+        }
+    } while (opcao != 0);   // repete ate o usuario escolher 0
+}
+
+
 int main() {
     int opcao;   // guarda a opcao escolhida no menu principal
 
@@ -173,13 +240,13 @@ int main() {
                 moduloClientes();   // abre o submenu de clientes
                 break;
             case 2:
-                moduloBaias();
+                moduloBaias(); // abre o submenu de baias / PCs
                 break;
              case 3:
                 moduloProdutos();   // abre o submenu de produtos
                 break;
             case 4:
-                printf("[Em construcao] Modulo de Atendimentos e Relatorios.\n");
+                moduloAtendimentosRelatorios(); // abre o submenu de atendimentos e relatorios
                 break;
             case 0:
                 printf("Encerrando o sistema...\n");
