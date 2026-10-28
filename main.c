@@ -24,6 +24,17 @@ struct Baia {
 struct Baia listaBaias[50];
 int totalBaias = 0;
 
+// Struct do produto (Modulo 3 - Murylo)
+struct Produto {
+    int idProduto;
+    char nomeProduto[30];  // nome do produto, uma palavra (ex: Coca600ml)
+    float preco;           // preco de venda
+    int estoque;           // quantidade disponivel
+    int ativo;             // 1 = ativo, 0 = removido
+};
+struct Produto listaProdutos[50];   // vetor com ate 50 produtos
+int totalProdutos = 0;              // quantos produtos ja foram cadastrados
+
 
 // ----------------------------------------------------------------------------
 // MODULO 1: PERSPECTIVA DE CLIENTES
@@ -103,6 +114,44 @@ void moduloBaias() {
     } while (opcaoBaia != 0);
 }
 
+// ----------------------------------------------------------------------------
+// MODULO 3: PERSPECTIVA DE PRODUTOS DO BALCAO
+// Autor: Murylo Gabriel - RGM 47902523
+// ----------------------------------------------------------------------------
+void moduloProdutos() {
+    int opcao;   // guarda a opcao escolhida no submenu
+
+    do {
+        printf("\n===== MODULO DE PRODUTOS DO BALCAO =====\n");
+        printf("1. Cadastrar Produto\n");
+        printf("2. Listar / Buscar Produtos\n");
+        printf("3. Editar Produto\n");
+        printf("4. Remover Produto\n");
+        printf("0. Voltar ao Menu Principal\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                printf("[Em construcao] Cadastrar: id, nome, preco e estoque.\n");
+                break;
+            case 2:
+                printf("[Em construcao] Listar / Buscar: mostra os produtos ativos (ou busca pelo id).\n");
+                break;
+            case 3:
+                printf("[Em construcao] Editar: altera preco e estoque pelo id.\n");
+                break;
+            case 4:
+                printf("[Em construcao] Remover: muda o campo ativo para 0 pelo id.\n");
+                break;
+            case 0:
+                printf("Voltando ao Menu Principal...\n");
+                break;
+            default:
+                printf("Opcao invalida! Tente novamente.\n");
+        }
+    } while (opcao != 0);   // repete ate o usuario escolher 0
+}
 
 int main() {
     int opcao;   // guarda a opcao escolhida no menu principal
@@ -113,7 +162,7 @@ int main() {
         printf("\n===== CYBER CAFE ANOS 2000 =====\n");
         printf("1. Modulo de Clientes (Murylo)\n");
         printf("2. Modulo de Baias / PCs (Matheus)\n");
-        printf("3. Modulo de Produtos do Balcao (Samuel)\n");
+        printf("3. Modulo de Produtos do Balcao (Murylo)\n");
         printf("4. Modulo de Atendimentos e Relatorios (Equipe)\n");
         printf("0. Encerrar o Sistema\n");
         printf("Escolha uma opcao: ");
@@ -126,8 +175,8 @@ int main() {
             case 2:
                 moduloBaias();
                 break;
-            case 3:
-                printf("[Em construcao] Modulo de Produtos do Balcao.\n");
+             case 3:
+                moduloProdutos();   // abre o submenu de produtos
                 break;
             case 4:
                 printf("[Em construcao] Modulo de Atendimentos e Relatorios.\n");
@@ -142,3 +191,4 @@ int main() {
 
     return 0;
 }
+

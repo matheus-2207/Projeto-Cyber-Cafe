@@ -10,8 +10,8 @@ Sistema de gestão em modo console, escrito em **C**, para um cyber café dos an
 |---|---|
 | Murylo Gabriel (RGM 47902523) | 1. Clientes (gamers) |
 | Matheus Vendramim (RGM 47602465) | 2. Baias (PCs do salão) |
-| Samuel Borges | 3. Produtos do balcão |
-| Os 3 integrantes (dividido) | 4. Atendimentos e relatórios |
+| Murylo Gabriel (RGM 47902523) | 3. Produtos do balcão |
+| Matheus Vendramim (RGM 47602465) | 4. Atendimentos e relatórios |
 
 ## O que entregamos no Checkpoint 1
 
@@ -51,7 +51,7 @@ struct Baia listaBaias[50];
 int totalBaias = 0;
 ```
 
-### 3. Produtos do balcão (Samuel Borges)
+### 3. Produtos do balcão (Murylo Gabriel)
 ```c
 struct Produto {
     int idProduto;
@@ -64,7 +64,7 @@ struct Produto listaProdutos[50];
 int totalProdutos = 0;
 ```
 
-### 4. Atendimentos (Equipe)
+### 4. Atendimentos (Matheus Vendramim)
 Cada atendimento é uma "comanda" que liga um cliente a uma baia e, se houver, a um produto consumido.
 ```c
 struct Atendimento {
@@ -87,8 +87,8 @@ int totalAtendimentos = 0;
 ```
 1. Modulo de Clientes (Murylo)
 2. Modulo de Baias / PCs (Matheus)
-3. Modulo de Produtos do Balcao (Samuel)
-4. Modulo de Atendimentos e Relatorios (Equipe)
+3. Modulo de Produtos do Balcao (Murylo)
+4. Modulo de Atendimentos e Relatorios (Matheus)
 0. Encerrar o Sistema
 ```
 
