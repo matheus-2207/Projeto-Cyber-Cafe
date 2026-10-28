@@ -13,6 +13,18 @@ struct Cliente {
 struct Cliente listaClientes[50];   // vetor com ate 50 clientes
 int totalClientes = 0;              // quantos clientes ja foram cadastrados
 
+// 2. Perspectiva do Matheus: Baias (PCs do salao)
+struct Baia {
+    int idBaia;
+    char nomeMaquina[20];  // ex: PC-01
+    float precoHora;       // valor cobrado por hora
+    int emManutencao;      // 1 = em manutencao, 0 = funcionando
+    int ativo;             // 1 = ativa, 0 = removida
+};
+struct Baia listaBaias[50];
+int totalBaias = 0;
+
+
 // ----------------------------------------------------------------------------
 // MODULO 1: PERSPECTIVA DE CLIENTES
 // Autor: Murylo Gabriel - RGM 47902523
@@ -52,6 +64,46 @@ void moduloClientes() {
     } while (opcao != 0);   // repete ate o usuario escolher 0
 }
 
+// ----------------------------------------------------------------------------
+// MODULO 2: PERSPECTIVA DE BAIAS / PCs
+// Autor: Matheus Vendramim - RGM 47602465
+// ----------------------------------------------------------------------------
+void moduloBaias() {
+    int opcaoBaia;
+    do {
+        printf("\n--- [MODULO 2: GESTAO DE BAIAS / PCs (Matheus)] ---\n");
+        printf("1. Cadastrar Nova Baia\n");
+        printf("2. Listar / Buscar Baias\n");
+        printf("3. Editar Baia (Preco ou Manutencao)\n");
+        printf("4. Remover Baia\n");
+        printf("0. Voltar ao Menu Principal\n");
+        printf("Escolha uma acao: ");
+        scanf("%d", &opcaoBaia);
+
+        switch (opcaoBaia) {
+            case 1:
+                printf("\n[Em construcao] Cadastro de Baia...\n");
+                printf("Campos previstos: ID, Nome da Maquina, Preco por Hora e Manutencao.\n");
+                break;
+            case 2:
+                printf("\n[Em construcao] Listagem e busca de Baias...\n");
+                break;
+            case 3:
+                printf("\n[Em construcao] Edicao de Baia por ID...\n");
+                break;
+            case 4:
+                printf("\n[Em construcao] Remocao de Baia...\n");
+                break;
+            case 0:
+                printf("\nRetornando ao menu principal...\n");
+                break;
+            default:
+                printf("\n[ERRO] Opcao invalida no Modulo de Baias!\n");
+        }
+    } while (opcaoBaia != 0);
+}
+
+
 int main() {
     int opcao;   // guarda a opcao escolhida no menu principal
 
@@ -72,7 +124,7 @@ int main() {
                 moduloClientes();   // abre o submenu de clientes
                 break;
             case 2:
-                printf("[Em construcao] Modulo de Baias / PCs.\n");
+                moduloBaias();
                 break;
             case 3:
                 printf("[Em construcao] Modulo de Produtos do Balcao.\n");
