@@ -2,16 +2,26 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Compilar C (gcc)",
-            "type": "cppbuild",
-            "command": "C:/msys64/ucrt64/bin/gcc.exe",
+            "label": "Compilar C",
+            "type": "process",
+            "command": "/usr/bin/clang",
             "args": [
                 "-g",
                 "-Wall",
                 "${workspaceFolder}/main.c",
                 "-o",
-                "${workspaceFolder}/cybercafe.exe"
+                "${workspaceFolder}/cybercafe"
             ],
+            "windows": {
+                "command": "C:/msys64/ucrt64/bin/gcc.exe",
+                "args": [
+                    "-g",
+                    "-Wall",
+                    "${workspaceFolder}/main.c",
+                    "-o",
+                    "${workspaceFolder}/cybercafe.exe"
+                ]
+            },
             "options": {
                 "cwd": "${workspaceFolder}"
             },
