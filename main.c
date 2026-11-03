@@ -168,6 +168,8 @@ void moduloProdutos() {
     } while (opcao != 0);   // repete ate o usuario escolher 0
 }
 
+// MODULO 4: PERSPECTIVA DE ATENDIMENTOS E RELATORIOS
+
 void moduloAtendimentosRelatorios() {
     int opcao;   // guarda a opcao escolhida no submenu
 
