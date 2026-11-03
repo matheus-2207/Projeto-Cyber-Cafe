@@ -4,16 +4,16 @@
         {
             "label": "Compilar C (gcc)",
             "type": "cppbuild",
-            "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
+            "command": "C:/msys64/ucrt64/bin/gcc.exe",
             "args": [
                 "-g",
                 "-Wall",
-                "${file}",
+                "${workspaceFolder}/main.c",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}/cybercafe.exe"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": ["$gcc"],
             "group": {
