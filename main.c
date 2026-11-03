@@ -229,10 +229,10 @@ int main() {
 
     do {
         printf("\n===== CYBER CAFE ANOS 2000 =====\n");
-        printf("1. Modulo de Clientes (Murylo)\n");
-        printf("2. Modulo de Baias / PCs (Matheus)\n");
-        printf("3. Modulo de Produtos do Balcao (Murylo)\n");
-        printf("4. Modulo de Atendimentos e Relatorios (Equipe)\n");
+        printf("1. Modulo de Clientes \n");
+        printf("2. Modulo de Baias / PCs \n");
+        printf("3. Modulo de Produtos do Balcao \n");
+        printf("4. Modulo de Atendimentos e Relatorios \n");
         printf("0. Encerrar o Sistema\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
