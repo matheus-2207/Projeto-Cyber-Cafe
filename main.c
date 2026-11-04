@@ -50,6 +50,22 @@ struct Atendimento {
 struct Atendimento listaAtendimentos[50];   // vetor com ate 50 atendimentos
 int totalAtendimentos = 0;                  // quantos atendimentos ja foram registrados
 
+// Limpa a tela do terminal (Windows usa cls, Linux/macOS usa clear)
+void limparTela() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+// Espera o usuario apertar ENTER antes de continuar
+void pausar() {
+    printf("\nPressione ENTER para continuar...");
+    getchar();
+    getchar();
+}
+
 
 // ----------------------------------------------------------------------------
 // MODULO 1: PERSPECTIVA DE CLIENTES
@@ -59,6 +75,7 @@ void moduloClientes() {
     int opcao;   // guarda a opcao escolhida no submenu
 
     do {
+        limparTela();
         printf("\n===== MODULO DE CLIENTES =====\n");
         printf("1. Cadastrar Cliente\n");
         printf("2. Listar / Buscar Clientes\n");
@@ -71,15 +88,19 @@ void moduloClientes() {
         switch (opcao) {
             case 1:
                 printf("[Em construcao] Cadastrar: id, nick, telefone e idade.\n");
+                pausar();
                 break;
             case 2:
                 printf("[Em construcao] Listar / Buscar: mostra os clientes ativos (ou busca pelo id).\n");
+                pausar();
                 break;
             case 3:
                 printf("[Em construcao] Editar: altera nick, telefone e idade pelo id.\n");
+                pausar();
                 break;
             case 4:
                 printf("[Em construcao] Remover: muda o campo ativo para 0 pelo id.\n");
+                pausar();
                 break;
             case 0:
                 printf("Voltando ao Menu Principal...\n");
@@ -97,6 +118,7 @@ void moduloClientes() {
 void moduloBaias() {
     int opcaoBaia;
     do {
+        limparTela();
         printf("\n--- [MODULO 2: GESTAO DE BAIAS / PCs (Matheus)] ---\n");
         printf("1. Cadastrar Nova Baia\n");
         printf("2. Listar / Buscar Baias\n");
@@ -110,15 +132,19 @@ void moduloBaias() {
             case 1:
                 printf("\n[Em construcao] Cadastro de Baia...\n");
                 printf("Campos previstos: ID, Nome da Maquina, Preco por Hora e Manutencao.\n");
+                pausar();
                 break;
             case 2:
                 printf("\n[Em construcao] Listagem e busca de Baias...\n");
+                pausar();
                 break;
             case 3:
                 printf("\n[Em construcao] Edicao de Baia por ID...\n");
+                pausar();
                 break;
             case 4:
                 printf("\n[Em construcao] Remocao de Baia...\n");
+                pausar();
                 break;
             case 0:
                 printf("\nRetornando ao menu principal...\n");
@@ -137,6 +163,7 @@ void moduloProdutos() {
     int opcao;   // guarda a opcao escolhida no submenu
 
     do {
+        limparTela();
         printf("\n===== MODULO DE PRODUTOS DO BALCAO =====\n");
         printf("1. Cadastrar Produto\n");
         printf("2. Listar / Buscar Produtos\n");
@@ -149,15 +176,19 @@ void moduloProdutos() {
         switch (opcao) {
             case 1:
                 printf("[Em construcao] Cadastrar: id, nome, preco e estoque.\n");
+                pausar();
                 break;
             case 2:
                 printf("[Em construcao] Listar / Buscar: mostra os produtos ativos (ou busca pelo id).\n");
+                pausar();
                 break;
             case 3:
                 printf("[Em construcao] Editar: altera preco e estoque pelo id.\n");
+                pausar();
                 break;
             case 4:
                 printf("[Em construcao] Remover: muda o campo ativo para 0 pelo id.\n");
+                pausar();
                 break;
             case 0:
                 printf("Voltando ao Menu Principal...\n");
@@ -174,6 +205,7 @@ void moduloAtendimentosRelatorios() {
     int opcao;   // guarda a opcao escolhida no submenu
 
     do {
+        limparTela();
         printf("\n===== MODULO DE ATENDIMENTOS E RELATORIOS =====\n");
         printf("1. Registrar Atendimento (Cliente + Baia + Consumo)\n");
         printf("2. Listar Atendimentos\n");
@@ -190,27 +222,35 @@ void moduloAtendimentosRelatorios() {
         switch (opcao) {
             case 1:
                 printf("[Em construcao] Registrar: id do cliente, id da baia, minutos e produto consumido.\n");
+                pausar();
                 break;
             case 2:
                 printf("[Em construcao] Listar: mostra todos os atendimentos validos.\n");
+                pausar();
                 break;
             case 3:
                 printf("[Em construcao] Editar: altera minutos ou consumo pelo id.\n");
+                pausar();
                 break;
             case 4:
                 printf("[Em construcao] Estornar: muda o campo ativo para 0 pelo id.\n");
+                pausar();
                 break;
             case 5:
                 printf("[Em construcao] Relatorio: baia com mais minutos de uso.\n");
+                pausar();
                 break;
             case 6:
                 printf("[Em construcao] Relatorio: produto com maior quantidade vendida.\n");
+                pausar();
                 break;
             case 7:
                 printf("[Em construcao] Relatorio: cliente que mais gastou.\n");
+                pausar();
                 break;
             case 8:
                 printf("[Em construcao] Relatorio: soma do valor de todos os atendimentos.\n");
+                pausar();
                 break;
             case 0:
                 printf("Voltando ao Menu Principal...\n");
@@ -228,6 +268,7 @@ int main() {
     setlocale(LC_ALL, "Portuguese");   // permite acentos no console
 
     do {
+        limparTela();
         printf("\n===== CYBER CAFE ANOS 2000 =====\n");
         printf("1. Modulo de Clientes \n");
         printf("2. Modulo de Baias / PCs \n");
