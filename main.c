@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-// Struct do cliente (Modulo 1 - Murylo)
+// Struct do cliente (Modulo 1 - Murylo )
 struct Cliente {
     int idCliente;
     char nick[30];      // apelido nos jogos, uma palavra (ex: SniperBR)
