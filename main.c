@@ -1,7 +1,8 @@
 // ============================================================================
 // CYBER CAFE ANOS 2000 (Baias e Consumo)
-// Autor: Murylo Gabriel - RGM 47902523 (Modulos 1 e 3)
-// Autor: Matheus Vendramim - RGM 47602465 (Modulos 2 e 4)
+// Autor: Murylo Gabriel - RGM 47902523 (Modulo 1 e 4 relatorios)
+// Autor: Matheus Vendramim - RGM 47602465 (Modulo 2 e Modulo 4, opcoes 1 a 4)
+// Autor: Samuel - RGM XXXXXXXX (Modulo 3)
 // ============================================================================
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +30,7 @@ struct Baia {
 struct Baia listaBaias[50];
 int totalBaias = 0;
 
-// Struct do produto (Modulo 3 - Murylo)
+// Struct do produto (Modulo 3 - Samuel)
 struct Produto {
     int idProduto;
     char nomeProduto[30];  // nome do produto, uma palavra (ex: Coca600ml)
@@ -286,7 +287,7 @@ void moduloBaias() {
 
 // ----------------------------------------------------------------------------
 // MODULO 3: PERSPECTIVA DE PRODUTOS DO BALCAO
-// Autor: Murylo Gabriel - RGM 47902523
+// Autor: Samuel - RGM XXXXXXXX
 // ----------------------------------------------------------------------------
 void moduloProdutos() {
     int opcao;
@@ -333,6 +334,9 @@ void moduloProdutos() {
                             printf("ID: %d | %s | R$ %.2f | Estoque: %d\n",
                                    listaProdutos[i].idProduto, listaProdutos[i].nomeProduto,
                                    listaProdutos[i].preco, listaProdutos[i].estoque);
+                            if (listaProdutos[i].estoque == 0) {
+                                printf("   >> ESTOQUE ZERADO! Repor produto.\n");
+                            }
                             achou = 1;
                         }
                     }
@@ -388,18 +392,118 @@ void moduloProdutos() {
 }
 
 // ----------------------------------------------------------------------------
+// RELATORIOS ANALITICOS (usados pelo Modulo 4)
+// Autor: Murylo Gabriel - RGM 47902523
+// ----------------------------------------------------------------------------
+// Calcula qual baia acumulou mais minutos de uso.
+void relatorioBaiaMaisUsada() {
+    int i, j;
+    int somaInt, maiorInt, idMaior;
+    maiorInt = 0;
+    idMaior = 0;
+    for (i = 0; i < totalBaias; i++) {
+        somaInt = 0;
+        for (j = 0; j < totalAtendimentos; j++) {
+            if (listaAtendimentos[j].ativo == 1 && listaAtendimentos[j].idBaia == listaBaias[i].idBaia) {
+                somaInt = somaInt + listaAtendimentos[j].minutosUso;
+            }
+        }
+        if (somaInt > maiorInt) {
+            maiorInt = somaInt;
+            idMaior = i;
+        }
+    }
+    if (maiorInt == 0) {
+        printf("Nenhum uso registrado.\n");
+    } else {
+        printf("Baia mais usada: %s com %d minutos.\n", listaBaias[idMaior].nomeMaquina, maiorInt);
+    }
+    pausar();
+}
+
+// Calcula qual produto teve mais unidades vendidas.
+void relatorioProdutoMaisVendido() {
+    int i, j;
+    int somaInt, maiorInt, idMaior;
+    maiorInt = 0;
+    idMaior = 0;
+    for (i = 0; i < totalProdutos; i++) {
+        somaInt = 0;
+        for (j = 0; j < totalAtendimentos; j++) {
+            if (listaAtendimentos[j].ativo == 1 && listaAtendimentos[j].idProduto == listaProdutos[i].idProduto) {
+                somaInt = somaInt + listaAtendimentos[j].qtdProduto;
+            }
+        }
+        if (somaInt > maiorInt) {
+            maiorInt = somaInt;
+            idMaior = i;
+        }
+    }
+    if (maiorInt == 0) {
+        printf("Nenhuma venda registrada.\n");
+    } else {
+        printf("Produto mais vendido: %s com %d unidades.\n", listaProdutos[idMaior].nomeProduto, maiorInt);
+    }
+    pausar();
+}
+
+// Calcula qual cliente acumulou o maior gasto.
+void relatorioClienteVIP() {
+    int i, j;
+    int idMaior;
+    float somaFloat, maiorFloat;
+    maiorFloat = 0;
+    idMaior = 0;
+    for (i = 0; i < totalClientes; i++) {
+        somaFloat = 0;
+        for (j = 0; j < totalAtendimentos; j++) {
+            if (listaAtendimentos[j].ativo == 1 && listaAtendimentos[j].idCliente == listaClientes[i].idCliente) {
+                somaFloat = somaFloat + listaAtendimentos[j].valorTotal;
+            }
+        }
+        if (somaFloat > maiorFloat) {
+            maiorFloat = somaFloat;
+            idMaior = i;
+        }
+    }
+    if (maiorFloat == 0) {
+        printf("Nenhum gasto registrado.\n");
+    } else {
+        printf("Cliente VIP: %s gastou R$ %.2f.\n", listaClientes[idMaior].nick, maiorFloat);
+    }
+    pausar();
+}
+
+// Calcula o faturamento e a quantidade de atendimentos validos.
+void relatorioFaturamento() {
+    int i;
+    int somaInt;
+    float somaFloat;
+    somaFloat = 0;
+    somaInt = 0;
+    for (i = 0; i < totalAtendimentos; i++) {
+        if (listaAtendimentos[i].ativo == 1) {
+            somaFloat = somaFloat + listaAtendimentos[i].valorTotal;
+            somaInt++;
+        }
+    }
+    printf("Atendimentos validos: %d\n", somaInt);
+    printf("Faturamento do dia: R$ %.2f\n", somaFloat);
+    pausar();
+}
+
+// ----------------------------------------------------------------------------
 // MODULO 4: PERSPECTIVA DE ATENDIMENTOS E RELATORIOS
-// Autor: Matheus Vendramim - RGM 47602465
+// Autor: Matheus Vendramim - RGM 47602465 (opcoes 1 a 4)
+// Relatorios (opcoes 5 a 8): funcoes do Murylo Gabriel, definidas acima
 // ----------------------------------------------------------------------------
 void moduloAtendimentosRelatorios() {
     int opcao;
-    int i, j;
+    int i;
     int idBusca;
     int achou;
     int posCliente, posBaia, posProduto;   // posicao (indice) no vetor; -1 = nao achou
     int minutos, qtd, idProd;              // dados digitados
-    int somaInt, maiorInt, idMaior;        // usados nos relatorios
-    float somaFloat, maiorFloat;           // usados nos relatorios
 
     do {
         limparTela();
@@ -582,83 +686,16 @@ void moduloAtendimentosRelatorios() {
                 pausar();
                 break;
             case 5:
-                maiorInt = 0;
-                idMaior = 0;
-                for (i = 0; i < totalBaias; i++) {
-                    somaInt = 0;
-                    for (j = 0; j < totalAtendimentos; j++) {
-                        if (listaAtendimentos[j].ativo == 1 && listaAtendimentos[j].idBaia == listaBaias[i].idBaia) {
-                            somaInt = somaInt + listaAtendimentos[j].minutosUso;
-                        }
-                    }
-                    if (somaInt > maiorInt) {
-                        maiorInt = somaInt;
-                        idMaior = i;
-                    }
-                }
-                if (maiorInt == 0) {
-                    printf("Nenhum uso registrado.\n");
-                } else {
-                    printf("Baia mais usada: %s com %d minutos.\n", listaBaias[idMaior].nomeMaquina, maiorInt);
-                }
-                pausar();
+                relatorioBaiaMaisUsada();
                 break;
             case 6:
-                maiorInt = 0;
-                idMaior = 0;
-                for (i = 0; i < totalProdutos; i++) {
-                    somaInt = 0;
-                    for (j = 0; j < totalAtendimentos; j++) {
-                        if (listaAtendimentos[j].ativo == 1 && listaAtendimentos[j].idProduto == listaProdutos[i].idProduto) {
-                            somaInt = somaInt + listaAtendimentos[j].qtdProduto;
-                        }
-                    }
-                    if (somaInt > maiorInt) {
-                        maiorInt = somaInt;
-                        idMaior = i;
-                    }
-                }
-                if (maiorInt == 0) {
-                    printf("Nenhuma venda registrada.\n");
-                } else {
-                    printf("Produto mais vendido: %s com %d unidades.\n", listaProdutos[idMaior].nomeProduto, maiorInt);
-                }
-                pausar();
+                relatorioProdutoMaisVendido();
                 break;
             case 7:
-                maiorFloat = 0;
-                idMaior = 0;
-                for (i = 0; i < totalClientes; i++) {
-                    somaFloat = 0;
-                    for (j = 0; j < totalAtendimentos; j++) {
-                        if (listaAtendimentos[j].ativo == 1 && listaAtendimentos[j].idCliente == listaClientes[i].idCliente) {
-                            somaFloat = somaFloat + listaAtendimentos[j].valorTotal;
-                        }
-                    }
-                    if (somaFloat > maiorFloat) {
-                        maiorFloat = somaFloat;
-                        idMaior = i;
-                    }
-                }
-                if (maiorFloat == 0) {
-                    printf("Nenhum gasto registrado.\n");
-                } else {
-                    printf("Cliente VIP: %s gastou R$ %.2f.\n", listaClientes[idMaior].nick, maiorFloat);
-                }
-                pausar();
+                relatorioClienteVIP();
                 break;
             case 8:
-                somaFloat = 0;
-                somaInt = 0;
-                for (i = 0; i < totalAtendimentos; i++) {
-                    if (listaAtendimentos[i].ativo == 1) {
-                        somaFloat = somaFloat + listaAtendimentos[i].valorTotal;
-                        somaInt++;
-                    }
-                }
-                printf("Atendimentos validos: %d\n", somaInt);
-                printf("Faturamento do dia: R$ %.2f\n", somaFloat);
-                pausar();
+                relatorioFaturamento();
                 break;
             case 0:
                 printf("Voltando ao Menu Principal...\n");
