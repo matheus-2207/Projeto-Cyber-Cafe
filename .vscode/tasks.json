@@ -17,9 +17,9 @@
                 "args": [
                     "-g",
                     "-Wall",
-                    "${workspaceFolder}/main.c",
+                    "main.c",
                     "-o",
-                    "${workspaceFolder}/cybercafe.exe"
+                    "${env:TEMP}/cybercafe.exe"
                 ]
             },
             "options": {
