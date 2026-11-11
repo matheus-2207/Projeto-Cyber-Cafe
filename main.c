@@ -57,7 +57,7 @@ struct Atendimento listaAtendimentos[50];
 int totalAtendimentos = 0;
 
 // Limpa a tela do terminal (Windows usa cls, Linux/macOS usa clear)
-void limparTela() {
+void limparTela(void) {
     #ifdef _WIN32
         system("cls");
     #else
@@ -66,10 +66,75 @@ void limparTela() {
 }
 
 // Espera o usuario apertar ENTER antes de continuar
-void pausar() {
+void pausar(void) {
     printf("\nPressione ENTER para continuar...");
     getchar();   // consome o ENTER que sobrou do ultimo scanf
     getchar();   // espera o novo ENTER do usuario
+}
+
+void listarClientesAtivos(void) {
+    int i;
+    int achou = 0;
+    printf("\n===== USUARIOS ATIVOS =====\n");
+    for (i = 0; i < totalClientes; i++) {
+        if (listaClientes[i].ativo == 1) {
+            printf("ID: %d | Nick: %s\n", listaClientes[i].idCliente, listaClientes[i].nick);
+            achou = 1;
+        }
+    }
+    if (achou == 0) printf("Nenhum cliente ativo cadastrado.\n");
+    printf("\n");
+}
+
+void listarBaiasAtivas(void) {
+    int i;
+    int achou = 0;
+    printf("\n===== BAIAS ATIVAS =====\n");
+    for (i = 0; i < totalBaias; i++) {
+        if (listaBaias[i].ativo == 1) {
+            printf("ID: %d | Maquina: %s\n", listaBaias[i].idBaia, listaBaias[i].nomeMaquina);
+            achou = 1;
+        }
+    }
+    if (achou == 0) printf("Nenhuma baia ativa cadastrada.\n");
+    printf("\n");
+}
+
+void listarProdutosAtivos(void) {
+    int i;
+    int achou = 0;
+    printf("\n===== PRODUTOS ATIVOS =====\n");
+    for (i = 0; i < totalProdutos; i++) {
+        if (listaProdutos[i].ativo == 1) {
+            printf("ID: %d | %s\n", listaProdutos[i].idProduto, listaProdutos[i].nomeProduto);
+            achou = 1;
+        }
+    }
+    if (achou == 0) printf("Nenhum produto ativo cadastrado.\n");
+    printf("\n");
+}
+
+void listarAtendimentosAtivos(void) {
+    int i, j, k;
+    int achou = 0;
+    printf("\n===== ATENDIMENTOS ATIVOS =====\n");
+    for (i = 0; i < totalAtendimentos; i++) {
+        if (listaAtendimentos[i].ativo == 1) {
+            printf("ID: %d | Cliente: ", listaAtendimentos[i].idAtendimento);
+            for (j = 0; j < totalClientes; j++) {
+                if (listaClientes[j].idCliente == listaAtendimentos[i].idCliente) printf("%s", listaClientes[j].nick);
+            }
+            printf(" | Baia: ");
+            for (k = 0; k < totalBaias; k++) {
+                if (listaBaias[k].idBaia == listaAtendimentos[i].idBaia) printf("%s", listaBaias[k].nomeMaquina);
+            }
+            printf(" | %d min | Produto: %d x%d | R$ %.2f\n", listaAtendimentos[i].minutosUso,
+                   listaAtendimentos[i].idProduto, listaAtendimentos[i].qtdProduto, listaAtendimentos[i].valorTotal);
+            achou = 1;
+        }
+    }
+    if (achou == 0) printf("Nenhum atendimento ativo cadastrado.\n");
+    printf("\n");
 }
 
 
@@ -77,7 +142,7 @@ void pausar() {
 // MODULO 1: PERSPECTIVA DE CLIENTES
 // Autor: Murylo Gabriel - RGM 47902523
 // ----------------------------------------------------------------------------
-void moduloClientes() {
+void moduloClientes(void) {
     int opcao;        // opcao do submenu
     int i;            // contador dos for
     int idBusca;      // id digitado pelo usuario
@@ -113,26 +178,12 @@ void moduloClientes() {
                 pausar();
                 break;
             case 2:
-                printf("Digite o ID para buscar (0 = listar todos): ");
-                scanf("%d", &idBusca);
-                achou = 0;
-                for (i = 0; i < totalClientes; i++) {
-                    if (listaClientes[i].ativo == 1) {
-                        if (idBusca == 0 || listaClientes[i].idCliente == idBusca) {
-                            printf("ID: %d | Nick: %s | Tel: %s | Idade: %d\n",
-                                   listaClientes[i].idCliente, listaClientes[i].nick,
-                                   listaClientes[i].telefone, listaClientes[i].idade);
-                            achou = 1;
-                        }
-                    }
-                }
-                if (achou == 0) {
-                    printf("Nenhum cliente encontrado.\n");
-                }
+                listarClientesAtivos();
                 pausar();
                 break;
             case 3:
-                printf("ID do cliente a editar: ");
+                listarClientesAtivos();
+                printf("\nID do cliente a editar: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalClientes; i++) {
@@ -153,7 +204,8 @@ void moduloClientes() {
                 pausar();
                 break;
             case 4:
-                printf("ID do cliente a remover: ");
+                listarClientesAtivos();
+                printf("\nID do cliente a remover: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalClientes; i++) {
@@ -182,7 +234,7 @@ void moduloClientes() {
 // MODULO 2: PERSPECTIVA DE BAIAS / PCs
 // Autor: Matheus Vendramim - RGM 47602465
 // ----------------------------------------------------------------------------
-void moduloBaias() {
+void moduloBaias(void) {
     int opcaoBaia;
     int i;
     int idBusca;
@@ -217,31 +269,12 @@ void moduloBaias() {
                 pausar();
                 break;
             case 2:
-                printf("Digite o ID para buscar (0 = listar todas): ");
-                scanf("%d", &idBusca);
-                achou = 0;
-                for (i = 0; i < totalBaias; i++) {
-                    if (listaBaias[i].ativo == 1) {
-                        if (idBusca == 0 || listaBaias[i].idBaia == idBusca) {
-                            printf("ID: %d | Maquina: %s | R$ %.2f/h | ",
-                                   listaBaias[i].idBaia, listaBaias[i].nomeMaquina,
-                                   listaBaias[i].precoHora);
-                            if (listaBaias[i].emManutencao == 1) {
-                                printf("EM MANUTENCAO\n");
-                            } else {
-                                printf("Funcionando\n");
-                            }
-                            achou = 1;
-                        }
-                    }
-                }
-                if (achou == 0) {
-                    printf("Nenhuma baia encontrada.\n");
-                }
+                listarBaiasAtivas();
                 pausar();
                 break;
             case 3:
-                printf("ID da baia a editar: ");
+                listarBaiasAtivas();
+                printf("\nID da baia a editar: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalBaias; i++) {
@@ -260,7 +293,8 @@ void moduloBaias() {
                 pausar();
                 break;
             case 4:
-                printf("ID da baia a remover: ");
+                listarBaiasAtivas();
+                printf("\nID da baia a remover: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalBaias; i++) {
@@ -289,7 +323,7 @@ void moduloBaias() {
 // MODULO 3: PERSPECTIVA DE PRODUTOS DO BALCAO
 // Autor: Samuel - RGM XXXXXXXX
 // ----------------------------------------------------------------------------
-void moduloProdutos() {
+void moduloProdutos(void) {
     int opcao;
     int i;
     int idBusca;
@@ -325,29 +359,12 @@ void moduloProdutos() {
                 pausar();
                 break;
             case 2:
-                printf("Digite o ID para buscar (0 = listar todos): ");
-                scanf("%d", &idBusca);
-                achou = 0;
-                for (i = 0; i < totalProdutos; i++) {
-                    if (listaProdutos[i].ativo == 1) {
-                        if (idBusca == 0 || listaProdutos[i].idProduto == idBusca) {
-                            printf("ID: %d | %s | R$ %.2f | Estoque: %d\n",
-                                   listaProdutos[i].idProduto, listaProdutos[i].nomeProduto,
-                                   listaProdutos[i].preco, listaProdutos[i].estoque);
-                            if (listaProdutos[i].estoque == 0) {
-                                printf("   >> ESTOQUE ZERADO! Repor produto.\n");
-                            }
-                            achou = 1;
-                        }
-                    }
-                }
-                if (achou == 0) {
-                    printf("Nenhum produto encontrado.\n");
-                }
+                listarProdutosAtivos();
                 pausar();
                 break;
             case 3:
-                printf("ID do produto a editar: ");
+                listarProdutosAtivos();
+                printf("\nID do produto a editar: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalProdutos; i++) {
@@ -366,7 +383,8 @@ void moduloProdutos() {
                 pausar();
                 break;
             case 4:
-                printf("ID do produto a remover: ");
+                listarProdutosAtivos();
+                printf("\nID do produto a remover: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalProdutos; i++) {
@@ -396,7 +414,7 @@ void moduloProdutos() {
 // Autor: Murylo Gabriel - RGM 47902523
 // ----------------------------------------------------------------------------
 // Calcula qual baia acumulou mais minutos de uso.
-void relatorioBaiaMaisUsada() {
+void relatorioBaiaMaisUsada(void) {
     int i, j;
     int somaInt, maiorInt, idMaior;
     maiorInt = 0;
@@ -422,7 +440,7 @@ void relatorioBaiaMaisUsada() {
 }
 
 // Calcula qual produto teve mais unidades vendidas.
-void relatorioProdutoMaisVendido() {
+void relatorioProdutoMaisVendido(void) {
     int i, j;
     int somaInt, maiorInt, idMaior;
     maiorInt = 0;
@@ -448,7 +466,7 @@ void relatorioProdutoMaisVendido() {
 }
 
 // Calcula qual cliente acumulou o maior gasto.
-void relatorioClienteVIP() {
+void relatorioClienteVIP(void) {
     int i, j;
     int idMaior;
     float somaFloat, maiorFloat;
@@ -475,7 +493,7 @@ void relatorioClienteVIP() {
 }
 
 // Calcula o faturamento e a quantidade de atendimentos validos.
-void relatorioFaturamento() {
+void relatorioFaturamento(void) {
     int i;
     int somaInt;
     float somaFloat;
@@ -497,7 +515,7 @@ void relatorioFaturamento() {
 // Autor: Matheus Vendramim - RGM 47602465 (opcoes 1 a 4)
 // Relatorios (opcoes 5 a 8): funcoes do Murylo Gabriel, definidas acima
 // ----------------------------------------------------------------------------
-void moduloAtendimentosRelatorios() {
+void moduloAtendimentosRelatorios(void) {
     int opcao;
     int i;
     int idBusca;
@@ -516,6 +534,7 @@ void moduloAtendimentosRelatorios() {
         printf("6. [RELATORIO] Produto mais vendido\n");
         printf("7. [RELATORIO] Cliente VIP (maior gasto)\n");
         printf("8. [RELATORIO] Faturamento do dia\n");
+        printf("9. [RELATORIO] Atendimentos de um cliente\n");
         printf("0. Voltar ao Menu Principal\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -528,7 +547,8 @@ void moduloAtendimentosRelatorios() {
                     break;
                 }
                 // --- procura o cliente ---
-                printf("ID do cliente: ");
+                listarClientesAtivos();
+                printf("\nID do cliente: ");
                 scanf("%d", &idBusca);
                 posCliente = -1;
                 for (i = 0; i < totalClientes; i++) {
@@ -542,7 +562,8 @@ void moduloAtendimentosRelatorios() {
                     break;
                 }
                 // --- procura a baia ---
-                printf("ID da baia: ");
+                listarBaiasAtivas();
+                printf("\nID da baia: ");
                 scanf("%d", &idBusca);
                 posBaia = -1;
                 for (i = 0; i < totalBaias; i++) {
@@ -563,7 +584,8 @@ void moduloAtendimentosRelatorios() {
                 printf("Minutos de uso: ");
                 scanf("%d", &minutos);
                 // --- consumo (opcional) ---
-                printf("ID do produto (0 = nenhum): ");
+                listarProdutosAtivos();
+                printf("\nID do produto (0 = nenhum): ");
                 scanf("%d", &idProd);
                 qtd = 0;
                 posProduto = -1;
@@ -607,24 +629,12 @@ void moduloAtendimentosRelatorios() {
                 pausar();
                 break;
             case 2:
-                achou = 0;
-                for (i = 0; i < totalAtendimentos; i++) {
-                    if (listaAtendimentos[i].ativo == 1) {
-                        printf("ID: %d | Cliente: %d | Baia: %d | %d min | Produto: %d x%d | R$ %.2f\n",
-                               listaAtendimentos[i].idAtendimento, listaAtendimentos[i].idCliente,
-                               listaAtendimentos[i].idBaia, listaAtendimentos[i].minutosUso,
-                               listaAtendimentos[i].idProduto, listaAtendimentos[i].qtdProduto,
-                               listaAtendimentos[i].valorTotal);
-                        achou = 1;
-                    }
-                }
-                if (achou == 0) {
-                    printf("Nenhum atendimento registrado.\n");
-                }
+                listarAtendimentosAtivos();
                 pausar();
                 break;
             case 3:
-                printf("ID do atendimento a editar: ");
+                listarAtendimentosAtivos();
+                printf("\nID do atendimento a editar: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalAtendimentos; i++) {
@@ -664,7 +674,8 @@ void moduloAtendimentosRelatorios() {
                 pausar();
                 break;
             case 4:
-                printf("ID do atendimento a estornar: ");
+                listarAtendimentosAtivos();
+                printf("\nID do atendimento a estornar: ");
                 scanf("%d", &idBusca);
                 achou = 0;
                 for (i = 0; i < totalAtendimentos; i++) {
@@ -697,6 +708,22 @@ void moduloAtendimentosRelatorios() {
             case 8:
                 relatorioFaturamento();
                 break;
+            case 9:
+                listarClientesAtivos();
+                printf("\nID do cliente para consultar atendimentos: ");
+                scanf("%d", &idBusca);
+                achou = 0;
+                for (i = 0; i < totalAtendimentos; i++) {
+                    if (listaAtendimentos[i].ativo == 1 && listaAtendimentos[i].idCliente == idBusca) {
+                        printf("Atendimento ID: %d | %d min | R$ %.2f\n",
+                               listaAtendimentos[i].idAtendimento, listaAtendimentos[i].minutosUso,
+                               listaAtendimentos[i].valorTotal);
+                        achou = 1;
+                    }
+                }
+                if (achou == 0) printf("Nenhum atendimento ativo encontrado para esse cliente.\n");
+                pausar();
+                break;
             case 0:
                 printf("Voltando ao Menu Principal...\n");
                 break;
@@ -708,7 +735,7 @@ void moduloAtendimentosRelatorios() {
 }
 
 
-int main() {
+int main(void) {
     int opcao;   // guarda a opcao escolhida no menu principal
 
     setlocale(LC_ALL, "Portuguese");   // permite acentos no console
