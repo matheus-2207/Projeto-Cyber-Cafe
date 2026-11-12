@@ -1,8 +1,8 @@
 // ============================================================================
 // CYBER CAFE ANOS 2000 (Baias e Consumo)
-// Autor: Murylo Gabriel - RGM 47902523 (Modulo 1 e 4 relatorios)
-// Autor: Matheus Vendramim - RGM 47602465 (Modulo 2 e Modulo 4, opcoes 1 a 4)
-// Autor: Samuel - RGM XXXXXXXX (Modulo 3)
+// Autor: Murylo Gabriel - RGM 47902523 (Modulo 1)
+// Autor: Matheus Vendramim - RGM 47602465 (Modulo 2)
+// Autor: Samuel - RGM XXXXXXXX (Modulo 3 e Modulo 4)
 // ============================================================================
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,7 +41,7 @@ struct Produto {
 struct Produto listaProdutos[50];
 int totalProdutos = 0;
 
-// Struct do atendimento (Modulo 4 - Matheus)
+// Struct do atendimento (Modulo 4 - Samuel)
 // Cada atendimento liga um cliente, uma baia e um produto consumido
 struct Atendimento {
     int idAtendimento;
