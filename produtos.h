@@ -76,7 +76,7 @@ void buscarProdutosPorNome(void) {
 
 // ----------------------------------------------------------------------------
 // MODULO 3: PERSPECTIVA DE PRODUTOS DO BALCAO
-// Autor: Samuel - RGM XXXXXXXX
+// Autor: Samuel - RGM 47459191
 // ----------------------------------------------------------------------------
 void moduloProdutos(void) {
     int opcao;

@@ -46,7 +46,7 @@ void listarAtendimentosAtivos(void) {
 
 // ----------------------------------------------------------------------------
 // RELATORIOS ANALITICOS (usados pelo Modulo 4)
-// Autor: Murylo Gabriel - RGM 47902523
+// Autor: Samuel  - RGM 47459191
 // ----------------------------------------------------------------------------
 // Calcula qual baia acumulou mais minutos de uso.
 void relatorioBaiaMaisUsada(void) {
