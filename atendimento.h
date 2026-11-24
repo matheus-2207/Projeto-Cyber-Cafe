@@ -261,6 +261,95 @@ void relatorioFaturamento(void) {
 // Relatorios (opcoes 5 a 8): funcoes do Murylo Gabriel, definidas acima
 // ----------------------------------------------------------------------------
 
+// Matriz 2D: minutos de uso de cada cliente em cada baia.
+void relatorioMatrizUso(void) {
+    int matriz[MAX_CLIENTES][MAX_BAIAS] = {0};
+    int i, j, k;
+    int posCliente, posBaia;
+    int inicio, fim;
+
+    if (totalClientes == 0 || totalBaias == 0) {
+        printf("\nCadastre ao menos um cliente e uma baia.\n");
+        pausar();
+        return;
+    }
+
+    /* Percorre os atendimentos e acumula os minutos na matriz. */
+    for (k = 0; k < totalAtendimentos; k++) {
+        if (listaAtendimentos[k].ativo != 1) {
+            continue; /* Ignora os atendimentos estornados. */
+        }
+
+        posCliente = -1;
+        posBaia = -1;
+
+        /* Localiza a linha do cliente pelo ID. */
+        for (i = 0; i < totalClientes; i++) {
+            if (listaClientes[i].idCliente ==
+                listaAtendimentos[k].idCliente) {
+                posCliente = i;
+                break;
+            }
+        }
+
+        /* Localiza a coluna da baia pelo ID. */
+        for (j = 0; j < totalBaias; j++) {
+            if (listaBaias[j].idBaia ==
+                listaAtendimentos[k].idBaia) {
+                posBaia = j;
+                break;
+            }
+        }
+
+        /* Soma somente quando cliente e baia foram encontrados. */
+        if (posCliente != -1 && posBaia != -1) {
+            matriz[posCliente][posBaia] +=
+                listaAtendimentos[k].minutosUso;
+        }
+    }
+
+    printf("\n===== MATRIZ 2D: MINUTOS POR CLIENTE E BAIA =====\n");
+    printf("Cada celula soma os minutos dos atendimentos ativos.\n");
+
+    /* Exibe ate quatro baias por bloco para caber no terminal. */
+    for (inicio = 0; inicio < totalBaias; inicio += 4) {
+        fim = inicio + 4;
+
+        if (fim > totalBaias) {
+            fim = totalBaias;
+        }
+
+        /* Cabecalho com os nomes das baias. */
+        printf("\n%-22s", "ID / Cliente");
+        for (j = inicio; j < fim; j++) {
+            printf("%12.12s", listaBaias[j].nomeMaquina);
+        }
+
+        /* Identifica as baias tambem pelos IDs. */
+        printf("\n%-22s", "ID da baia");
+        for (j = inicio; j < fim; j++) {
+            printf("%12d", listaBaias[j].idBaia);
+        }
+        printf("\n");
+
+        /* Exibe uma linha por cliente. */
+        for (i = 0; i < totalClientes; i++) {
+            printf("%3d %-18.18s",
+                   listaClientes[i].idCliente,
+                   listaClientes[i].nick);
+
+            for (j = inicio; j < fim; j++) {
+                printf("%12d", matriz[i][j]);
+            }
+
+            printf("\n");
+        }
+    }
+
+    printf("\nValores em minutos; zero significa nenhum minuto acumulado.\n");
+    pausar();
+}
+
 void moduloAtendimentosRelatorios(void) {
     int opcao;
     int i;
@@ -281,6 +370,7 @@ void moduloAtendimentosRelatorios(void) {
         printf("7. [RELATORIO] Cliente VIP (maior gasto)\n");
         printf("8. [RELATORIO] Faturamento do dia\n");
         printf("9. [RELATORIO] Atendimentos de um cliente\n");
+        printf("10. [MATRIZ 2D] Minutos por cliente e baia\n");
         printf("0. Voltar ao Menu Principal\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -475,6 +565,10 @@ void moduloAtendimentosRelatorios(void) {
                 }
                 if (achou == 0) printf("Nenhum atendimento ativo encontrado para esse cliente.\n");
                 pausar();
+                break;
+
+            case 10:
+                relatorioMatrizUso();
                 break;
             case 0:
                 printf("Voltando ao Menu Principal...\n");
